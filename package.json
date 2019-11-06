@@ -4,20 +4,23 @@
   "description": "RESTful API with Node, Express, Postgres",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mike-evlantev/NodePostgresAPI.git"
   },
-  "author": "",
+  "author": "Mike Evlantev",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mike-evlantev/NodePostgresAPI/issues"
   },
   "homepage": "https://github.com/mike-evlantev/NodePostgresAPI#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "nodemon": "^1.19.4",
     "pg": "^7.12.1"
   }
 }
