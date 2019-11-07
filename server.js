@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 
-const users = require("./userRepo");
+const users = require("./routes/api/users");
 
 app.use(bodyParser.json());
 app.use(

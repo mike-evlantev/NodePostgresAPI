@@ -1,4 +1,7 @@
-const db = require("./db");
+const express = require("express");
+const router = express.Router();
+const connectPostgres = require("../../config/db");
+const db = connectPostgres();
 
 // @route   GET users
 // @desc    Get All Users
@@ -51,11 +54,15 @@ const updateUser = async (req, res) => {
   const id = parseInt(req.params.id);
   const { name, email } = req.body;
   const query =
-    "UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id";
+    "UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id, name";
   try {
     const user = await db.query(query, [name, email, id]);
     console.log(user);
-    res.status(200).send(`User modified with ID: ${user.id}`);
+    res
+      .status(200)
+      .send(
+        `User modified with ID: ${user.rows[0].id} and name ${user.rows[0].name}`
+      );
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
@@ -67,10 +74,14 @@ const updateUser = async (req, res) => {
 // @access  Public
 const deleteUser = async (req, res) => {
   const id = parseInt(req.params.id);
-  const query = "DELETE FROM users WHERE id = $1";
+  const query = "DELETE FROM users WHERE id = $1 RETURNING id, name, email";
   try {
     const user = await db.query(query, [id]);
-    res.status(200).send(`User deleted with ID: ${user.id}`);
+    res
+      .status(200)
+      .send(
+        `User deleted with ID: ${user.rows[0].id}, name: ${user.rows[0].name}, email: ${user.rows[0].email}`
+      );
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
